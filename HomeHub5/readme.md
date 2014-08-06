@@ -6,16 +6,18 @@ This page is behind a login page, which has a less than simple log in process. T
 
 ##Usage##
 
-    <?php
-		include('HomeHub5.php');
+```php
+<?php
+	include('HomeHub5.php');
 
-		$home_hub = new HomeHub5();
-		$cookie_id = $home_hub->login('YOUR_PASSWORD');
-		$page = $home_hub($home_hub::HELPDESK_PAGE, $cookie_id);
-		
-		echo '<pre>';
-		print_r($page);
-		echo '</pre>';
-	?>
+	$home_hub = new HomeHub5();
+	$cookie_id = $home_hub->login('YOUR_PASSWORD');
+	$page = $home_hub($home_hub::HELPDESK_PAGE, $cookie_id);
+	
+	echo '<pre>';
+	print_r($page);
+	echo '</pre>';
+?>
+```
 
 You'll need to change the IP address of your router in `HomeHub5.php`, look for the `const URL =` line.
