@@ -124,7 +124,7 @@ class HomeHub5 extends Utils {
 
 			// The POST fields
 			$fields = array (
-				'active_page' => self::LOGIN_PAGE,
+				'active_page' => self::LOGIN,
 				'mimic_button_field' => 'submit_button_login_submit: ..',
 				'post_id' => 0,
 				'md5_pass' => $md5_pass,

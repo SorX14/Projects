@@ -13,12 +13,26 @@ NOTE: You can only have 100 sessions open at a time, and they slowly expire. The
 	include('HomeHub5.php');
 
 	$home_hub = new HomeHub5();
+
+	// Create a cookie file
+	$cookie_location = '/tmp/cookie.file';
+	touch($cookie_location);
+
+	// Setup the Home Hub class parameters
+	$home_hub->setCookieFile($cookie_location);
 	$home_hub->setPassword('YOUR_PASSWORD');
 	$home_hub->setRouterIP('192.168.0.1'); // <- Change to your router IP
-	$page = $home_hub->getPage($home_hub::HELPDESK_PAGE);
 	
-	echo '<pre>';
-	print_r($page);
-	echo '</pre>';
+	// Get the raw page HTML
+	$page = $home_hub->getPage($home_hub::TROUBLESHOOTING_HELPDESK);
+
+	// Get specific entries
+	$uptime = $home_hub->getUptime($page['body']);
+	$data_usage = $home_hub->getDataUsage($page['body']);
+	
+	// Output the statistics
+	echo '<h1>Home Hub 5A statistics</h1>';
+	echo '<p><strong>Uptime (s):</strong> '.$uptime.'</p>';
+	echo '<p><strong>Data usage (sent/received MB): </strong> '.$data_usage->sent.' '.$data_usage->received.'</p>';
 ?>
 ```
