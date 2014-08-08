@@ -9,10 +9,45 @@ class HomeHub5 extends Utils {
 	// Change this to match your router settings
 	const BASE_PAGE = '/index.cgi';
 	
-	// The ID's of specific pages, this list is far from exhaustive
-	const ADVANCED_SETTINGS_PAGE = 9099;
-	const LOGIN_PAGE = 9145;
-	const HELPDESK_PAGE = 9140;
+	// The ID's of specific pages, this list is far from exhaustive (valid for version 4.7.5.1.83.8.173.1.6)
+	const LOGIN = 9145;
+	
+	const SETTINGS_WIRELESS = 9101;
+	const SETTINGS_ACCESS_CONTROL = 9113;
+	const SETTINGS_PORT_FORWARDING = 9105;
+	const SETTINGS_HUB_LIGHTS = 9128;
+	const SETTINGS_BROADBAND = 9114;
+	const SETTINGS_ADMIN_PASSWORD = 9123;
+	
+	const ADVANCED_SETTINGS_CONTINUE = 9099;
+	const ADVANCED_WIRELESS_PAGE_24G = 9102;
+	const ADVANCED_WIRELESS_PAGE_5G = 9103;
+	const ADVANCED_WIRELESS_PAGE_WPS = 9104;
+	const ADVANCED_BROADBAND_INTERNET = 9117;
+	const ADVANCED_BROADBAND_CONNECTION = 9118;
+	const ADVANCED_BROADBAND_VPN = 9119;
+	const ADVANCED_BROADBAND_DYNAMIC_DNS = 9121;
+	const ADVANCED_BROADBAND_IPV6_STATUS = 9122;
+	
+	const HOMENETWORK_DEVICES = 9130;
+	const HOMENETWORK_SMART_SETUP = 9135;
+	const HOMENETWORK_IP_ADDRESS = 9136;
+	const HOMENETWORK_IPV6_CONFIGURATION = 9138;
+	const HOMENETWORK_DHCP_TABLE = 9137;
+	
+	const FIREWALL_PORT_FORWARDING = 9106;
+	const FIREWALL_UPNP = 9109;
+	const FIREWALL_DMZ = 9110;
+	const FIREWALL_IPV6_PINHOLES = 9111;
+	const FIREWALL_CONFIGURATION = 9112;
+	
+	const SYSTEM_RESTART = 9124;
+	const SYSTEM_BACKUP_RESTORE = 9125;
+	const SYSTEM_RESET = 9126;
+	
+	const TROUBLESHOOTING_HELP_AND_ADVICE = 9139;
+	const TROUBLESHOOTING_HELPDESK = 9140;
+	const TROUBLESHOOTING_EVENT_LOG = 9141;
 	
 	// The password and IP class variables
 	private $password;
@@ -71,7 +106,7 @@ class HomeHub5 extends Utils {
 			throw new Exception ('No cookie file set - use setCookieFile($location)');
 		}
 		
-		$get_output = $this->sendGet('http://'.$this->router_ip.self::BASE_PAGE.'?active_page='.self::LOGIN_PAGE, array(), $this->cookie_file);
+		$get_output = $this->sendGet('http://'.$this->router_ip.self::BASE_PAGE.'?active_page='.self::LOGIN, array(), $this->cookie_file);
 				
 		if ($get_output) {					
 			// Use a regex to get the auth_key out of the page
@@ -108,7 +143,7 @@ class HomeHub5 extends Utils {
 				parse_str($redirect_url_parts['query'], $query_parts);
 				
 				// Check to see if the page we're being redirected to is the login page
-				if ((int) $query_parts['active_page'] != (int) self::LOGIN_PAGE) {
+				if ((int) $query_parts['active_page'] != (int) self::LOGIN) {
 					return true;
 				} else {
 					return false;
@@ -155,7 +190,7 @@ class HomeHub5 extends Utils {
 		if ($get_output) {
 			if (preg_match('/<!-- Page\((?<page_id>\d*?)\)=/', $get_output['body'], $matches)) {
 				$found_page_id = $matches['page_id'];
-				if ($found_page_id == self::LOGIN_PAGE) {
+				if ($found_page_id == self::LOGIN) {
 					// Delete the current cookie file and recreate it
 					unlink($this->cookie_file);
 					touch($this->cookie_file);
