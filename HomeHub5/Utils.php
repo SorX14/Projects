@@ -63,7 +63,7 @@ class Utils {
             } else {
                 $fields_array = array();
                 foreach ($fields as $k => $v) {
-                    $fields_array[] = urlencode($k).'='.urlencode($v);
+                    $fields_array[] = ($k).'='.($v);
                 }
             
                 $post_string = (implode('&', $fields_array));
@@ -82,6 +82,8 @@ class Utils {
 			if (!is_null($cookie_name)) {
 				curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_name);
 				curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_name);
+			} else {
+				curl_setopt($ch, CURLOPT_COOKIESESSION, true);
 			}
             
             if (!empty($headers)) {
@@ -90,7 +92,7 @@ class Utils {
 				foreach ($headers as $k => $v) {
 					$header_array[] = $k.': '.$v;
 				}
-				
+
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $header_array);
             }
             
