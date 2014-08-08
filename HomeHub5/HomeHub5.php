@@ -164,6 +164,8 @@ class HomeHub5 extends Utils {
 					if (!$this->login()) {
 						throw new Exception ('Failed to login');
 					}
+					
+					// Get the page again
 					$get_output = $this->sendGet('http://'.$this->router_ip.self::BASE_PAGE.'?active_page='.$page_id, array(), $this->cookie_file);
 				}
 			} else {
