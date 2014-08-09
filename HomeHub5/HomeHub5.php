@@ -235,7 +235,7 @@ class HomeHub5 extends Utils {
 	**/
 	public function getDataUsage($body) {
 		// Looks for the data sent/received row and gets the text before the end of the cell tag
-		if (preg_match('%11. Data sent/received:</td>.*?>(?<data>.*?)<%si', $body, $matches)) {
+		if (preg_match('%11. Data sent/received:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
 			// Explode the results and check that we have the correct number of items
 			$e = explode(' / ', $matches['data']);
 			if (count($e) == 2) {				
@@ -260,5 +260,26 @@ class HomeHub5 extends Utils {
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Attempt to find the version number and last update date
+	 * 
+	 * @param string $body The body of the document
+	 * @return stdClass|boolean
+	 */
+	public function getVersion($body) {
+		// Get the Home Hub version, and the date it was last updated
+		if (preg_match('%Software version (?<version>.*?) Last updated (?<date>.*?)</%', $body, $matches)) {
+			// We'll return as an object rather than an array to keep it clean in Restler
+			$return = new stdClass();
+			$return->version = $matches['version'];
+			$return->update_date = $matches['date'];
+			
+			return $return;
+		}
+		
+		// We failed to get the result we were expecting
+		return false;
 	}
 }
