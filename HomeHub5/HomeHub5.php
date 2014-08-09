@@ -241,18 +241,30 @@ class HomeHub5 extends Utils {
 			if (count($e) == 2) {				
 				// We'll check the last two characters, and if they match GB, we'll multiply the result
 				// otherwise we'll just remove the MB and return
-				foreach ($e as &$v) {
-					$p = explode(' ', $v);
-					if ($p[1] == 'GB') {
-						$p[0] *= 1024;
-					}
-					$v = $p[0];
+				$sent_mb = 0;
+				$received_mb = 0;
+				
+				// Sent
+				$sent_explode = explode(' ', $e[0]);
+				$sent_mb = $sent_explode[0];
+				if ($sent_explode[1] == 'GB') {
+					$sent_mb = $sent_explode[0] * 1000;
 				}
 				
+				// Received
+				$received_explode = explode(' ', $e[1]);
+				$received_mb = $received_explode[0];
+				if ($received_explode[1] == 'GB') {
+					$received_mb = $received_explode[0] * 1000;
+				}
+
 				// We'll return as an object rather than an array to keep it clean for Restler
 				$return = new stdClass();
+				$return->raw = $matches['data'];
 				$return->sent = (float) $e[0];
 				$return->received = (float) $e[1];
+				$return->sent_mb = (float) $sent_mb;
+				$return->received_mb = (float) $received_mb;
 				
 				return $return;
 			}
