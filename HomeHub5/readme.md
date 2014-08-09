@@ -29,10 +29,13 @@ NOTE: You can only have 100 sessions open at a time, and they slowly expire. The
 	// Get specific entries
 	$uptime = $home_hub->getUptime($page['body']);
 	$data_usage = $home_hub->getDataUsage($page['body']);
+	$version = $home_hub->getVersion($page['body']);
 	
 	// Output the statistics
 	echo '<h1>Home Hub 5A statistics</h1>';
 	echo '<p><strong>Uptime (s):</strong> '.$uptime.'</p>';
 	echo '<p><strong>Data usage (sent/received MB): </strong> '.$data_usage->sent.' '.$data_usage->received.'</p>';
+	echo '<p><strong>Version: </strong> '.$version->version.'</p>';
+	echo '<p><strong>Last update: </strong> '.$version->update_date.'</p>';
 ?>
 ```
