@@ -136,4 +136,18 @@ class Utils {
         }
         return $retVal;
     }
+    
+    /**
+     * Input a date in either text or timestamp form, and get a timestamp
+     * 
+     * @param unknown $date Either timestamp or date string
+     * @return int Timestamp
+     */
+    public static function stringOrStamp($date) {
+    	if (is_numeric($date)) {
+    		return $date;
+    	} else {
+    		return strtotime($date);
+    	}
+    } 
 }
