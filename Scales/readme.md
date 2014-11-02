@@ -1,6 +1,6 @@
 # Arduino Scales
 
-More information available here.
+More information available [here](http://www.s-parker.uk/2014/10/hacking-bathroom-scales-with-an-arduino-the-easy-way/).
 
 ## Theory
 
