@@ -10,34 +10,5 @@ NOTE: You can only have 100 sessions open at a time, and they slowly expire. The
 
 ##Usage##
 
-```php
-<?php
-	$config = require __DIR__.'/config.php';
-	require __DIR__.'/HomeHub5.php';
-
-	$home_hub = new HomeHub5();
-
-	// Create a cookie file
-	touch($cookie_location);
-
-	// Setup the Home Hub class parameters
-	$home_hub->setCookieFile($cookie_location);
-	$home_hub->setPassword('YOUR_PASSWORD'); // <- Change to your password
-	$home_hub->setRouterIP('192.168.0.1'); // <- Change to your router IP
-	
-	// Get the raw page HTML
-	$page = $home_hub->getPage($home_hub::TROUBLESHOOTING_HELPDESK);
-
-	// Get specific entries
-	$uptime = $home_hub->getUptime($page['body']);
-	$data_usage = $home_hub->getDataUsage($page['body']);
-	$version = $home_hub->getVersion($page['body']);
-	
-	// Output the statistics
-	echo '<h1>Home Hub 5A statistics</h1>';
-	echo '<p><strong>Uptime (s):</strong> '.$uptime.'</p>';
-	echo '<p><strong>Data usage (sent/received MB): </strong> '.$data_usage->sent.' '.$data_usage->received.'</p>';
-	echo '<p><strong>Version: </strong> '.$version->version.'</p>';
-	echo '<p><strong>Last update: </strong> '.$version->update_date.'</p>';
-?>
-```
+- Create a `config.php` file from `config.dist.php` with your router settings
+- Check example.php
