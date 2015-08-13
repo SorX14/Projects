@@ -12,12 +12,12 @@ NOTE: You can only have 100 sessions open at a time, and they slowly expire. The
 
 ```php
 <?php
-	include('HomeHub5.php');
+	$config = require __DIR__.'/config.php';
+	require __DIR__.'/HomeHub5.php';
 
 	$home_hub = new HomeHub5();
 
 	// Create a cookie file
-	$cookie_location = '/tmp/cookie.file';
 	touch($cookie_location);
 
 	// Setup the Home Hub class parameters
