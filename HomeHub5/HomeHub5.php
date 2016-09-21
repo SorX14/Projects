@@ -251,6 +251,33 @@ class HomeHub5 extends Utils {
 			return false;
 		}
 	}
+
+	/**
+	*   Attempt to find the data usage figures, and return them as kilobits per second
+	*
+	*	@param string $body The body of the document
+	*	@return array The received and transmitted values
+	**/
+	public function getDataRate($body) {
+		// Looks for the connection speed up/down row and gets the text before the end of the cell tag
+		if (preg_match('%6. Data rate:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
+			// Explode the results and check that we have the correct number of items
+			$e = explode(' / ', $matches['data']);
+			if (count($e) == 2) {
+				// Return raw values (my HomeHub doesn't have unit suffixes for the data rate).
+				// We'll return as an object rather than an array to keep it clean for Restler
+				$return = new \stdClass();
+				$return->raw = $matches['data'];
+				$return->up = (float) $e[0];
+				$return->down = (float) $e[1];
+
+				return $return;
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
 	
 	/**
 	 * Attempt to find the version number and last update date
