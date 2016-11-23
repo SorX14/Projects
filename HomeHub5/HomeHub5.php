@@ -223,14 +223,14 @@ class HomeHub5 extends Utils {
 				$received_mb = 0;
 				
 				// Sent
-				$sent_explode = explode(' ', $e[0]);
+				$sent_explode = explode(' ', ltrim($e[0]));
 				$sent_mb = $sent_explode[0];
 				if ($sent_explode[1] == 'GB') {
 					$sent_mb = $sent_explode[0] * 1000;
 				}
 				
 				// Received
-				$received_explode = explode(' ', $e[1]);
+				$received_explode = explode(' ', ltrim($e[1]));
 				$received_mb = $received_explode[0];
 				if ($received_explode[1] == 'GB') {
 					$received_mb = $received_explode[0] * 1000;
