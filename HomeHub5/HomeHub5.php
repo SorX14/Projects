@@ -253,13 +253,13 @@ class HomeHub5 extends Utils {
 	}
 
 	/**
-	*   Attempt to find the data usage figures, and return them as kilobits per second
+	*   Attempt to find the data rate figures, and return them as kilobits per second
 	*
 	*	@param string $body The body of the document
 	*	@return array The received and transmitted values
 	**/
 	public function getDataRate($body) {
-		// Looks for the connection speed up/down row and gets the text before the end of the cell tag
+		// Looks for the connection data rate up/down row and gets the text before the end of the cell tag
 		if (preg_match('%6. Data rate:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
 			// Explode the results and check that we have the correct number of items
 			$e = explode(' / ', $matches['data']);
@@ -286,7 +286,7 @@ class HomeHub5 extends Utils {
 		*       @return array The received and transmitted values
 		**/
 		public function getNoiseMargin($body) {
-			// Looks for the connection speed up/down row and gets the text before the end of the cell tag
+			// Looks for the noise margin row and gets the text before the end of the cell tag
 			if (preg_match('%8. Noise margin:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
 				// Explode the results and check that we have the correct number of items
 				$e = explode(' / ', $matches['data']);
@@ -299,6 +299,60 @@ class HomeHub5 extends Utils {
 				$return->minimum = (float) $e[1];
 				$return->margin = (float) $e[0] - $e[1];
 
+				return $return;
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	*   Attempt to find the line attenuation figures, and return them as they appear
+	*
+	*       @param string $body The body of the document
+	*       @return array The received and transmitted values
+	**/
+	public function getLineAttenuation($body) {
+		// Looks for the line attenuation row and gets the text before the end of the cell tag
+		if (preg_match('%9. Line attenuation:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
+			// Explode the results and check that we have the correct number of items
+			$e = explode(' / ', $matches['data']);
+			if (count($e) == 2) {
+				// Return raw values
+				// We'll return as an object rather than an array to keep it clean for Restler
+				$return = new \stdClass();
+				$return->raw = $matches['data'];
+				$return->actual = (float) $e[0];
+				$return->maximum = (float) $e[1];
+				
+				return $return;
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	*   Attempt to find the signal attenuation figures, and return them as they appear
+	*
+	*       @param string $body The body of the document
+	*       @return array The received and transmitted values
+	**/
+	public function getSignalAttenuation($body) {
+		// Looks for the signal attenuation row and gets the text before the end of the cell tag
+		if (preg_match('%10. Signal attenuation:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
+			// Explode the results and check that we have the correct number of items
+			$e = explode(' / ', $matches['data']);
+			if (count($e) == 2) {
+				// Return raw values
+				// We'll return as an object rather than an array to keep it clean for Restler
+				$return = new \stdClass();
+				$return->raw = $matches['data'];
+				$return->actual = (float) $e[0];
+				$return->maximum = (float) $e[1];
+				
 				return $return;
 			}
 			return false;
