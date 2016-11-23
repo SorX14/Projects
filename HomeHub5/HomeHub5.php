@@ -253,13 +253,13 @@ class HomeHub5 extends Utils {
 	}
 
 	/**
-	*   Attempt to find the data usage figures, and return them as kilobits per second
+	*   Attempt to find the data rate figures, and return them as kilobits per second
 	*
 	*	@param string $body The body of the document
 	*	@return array The received and transmitted values
 	**/
 	public function getDataRate($body) {
-		// Looks for the connection speed up/down row and gets the text before the end of the cell tag
+		// Looks for the connection data rate up/down row and gets the text before the end of the cell tag
 		if (preg_match('%6. Data rate:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
 			// Explode the results and check that we have the correct number of items
 			$e = explode(' / ', $matches['data']);
@@ -286,7 +286,7 @@ class HomeHub5 extends Utils {
 		*       @return array The received and transmitted values
 		**/
 		public function getNoiseMargin($body) {
-			// Looks for the connection speed up/down row and gets the text before the end of the cell tag
+			// Looks for the noise margin row and gets the text before the end of the cell tag
 			if (preg_match('%8. Noise margin:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
 				// Explode the results and check that we have the correct number of items
 				$e = explode(' / ', $matches['data']);
