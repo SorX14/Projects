@@ -279,6 +279,34 @@ class HomeHub5 extends Utils {
 		}
 	}
 	
+		/**
+		*   Attempt to find the noise margin figures, and return them as they appear
+		*
+		*       @param string $body The body of the document
+		*       @return array The received and transmitted values
+		**/
+		public function getNoiseMargin($body) {
+			// Looks for the connection speed up/down row and gets the text before the end of the cell tag
+			if (preg_match('%8. Noise margin:</td>.*?>(?<data>.*?)</%si', $body, $matches)) {
+				// Explode the results and check that we have the correct number of items
+				$e = explode(' / ', $matches['data']);
+				if (count($e) == 2) {
+				// Return raw values
+				// We'll return as an object rather than an array to keep it clean for Restler
+				$return = new \stdClass();
+				$return->raw = $matches['data'];
+				$return->actual = (float) $e[0];
+				$return->minimum = (float) $e[1];
+				$return->margin = (float) $e[0] - $e[1];
+
+				return $return;
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Attempt to find the version number and last update date
 	 * 
